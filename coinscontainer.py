@@ -38,6 +38,9 @@ class CoinsContainer:
         elif coin.getCurrency() != self.__currency:
             raise MyExceptions.IllegalCurrencyException("Moneta ma inna walute niż zdefiniowana w CoinsContainer")
 
+        else:
+            raise MyExceptions.IllegalCoinException("Moneta ma nieakceptowalna wartosc")
+
     def addToSelfFromAnother(self, other):
         for coin, amount in other.getDictOfCoins().items():
             for i in range(amount):
