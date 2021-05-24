@@ -27,7 +27,8 @@ jako reszta, odlicza wydany towar), odejmuje towar.
 3.  Wrzucenie większej kwoty,zakup towaru - oczekiwana reszta.
 4. Wykupienie całego asortymentu, próba zakupu po wyczerpaniu towaru oczekiwana informacja o braku.
 5. Sprawdzenie ceny towaru o nieprawidłowym numerze (<30lub >50) - oczekiwana informacja o błędzie.
-6. Wrzucenie kilku monet, przerwanie transakcji - oczekiwany zwrot monet. Wrzucenie za małej kwoty,wybranie poprawnego numeru towaru,wrzucenie reszty monet do odliczonej   kwoty,ponowne wybranie poprawnego numeru towaru - oczekiwany brak reszty.
+6. Wrzucenie kilku monet, przerwanie transakcji - oczekiwany zwrot monet.
+7. Wrzucenie za małej kwoty,wybranie poprawnego numeru towaru,wrzucenie reszty monet do odliczonej   kwoty,ponowne wybranie poprawnego numeru towaru - oczekiwany brak reszty.
 8. Zakup towaru płacąc po 1gr - suma stu monet ma być równa 1zł (dla floatów
 suma sto razy 0.01+0.01+...+0.01nie będzie równa 1.0).Płatności można dokonać za pomocą pętlifor w interpreterze.
 ### https://github.com/antek3737/JSPROJEKT

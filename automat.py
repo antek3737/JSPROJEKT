@@ -33,8 +33,6 @@ class Automat:
         return self.__chosen
 
     def selectNumber(self):
-        print(self.__productsInAutomat)
-        print("Automat: {0}".format(self.__coinsInAutomat))
         if not self.__isNumberCorrect():
             return "Wybrano zły numer"
         if not self.__isProductAvailable():
@@ -56,7 +54,7 @@ class Automat:
                 temp = copy.deepcopy(self.__remainderContainer)
                 self.__remainderContainer.eraseContainer()
                 print(temp.getListOfCoinsWithAmountsFromCoinsContainer())
-                return "Kupiono: {0} \n {1}".format(str(self.getChosenProduct().getName()), temp)
+                return "Kupiono: {0} \n".format(str(self.getChosenProduct().getName())), temp
 
     def getChosenNumber(self):
         return self.__chosen
