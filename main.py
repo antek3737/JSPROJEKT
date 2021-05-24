@@ -30,8 +30,10 @@ def selectProduct(var_temp):
 def putCoin(var_temp, coin):
     var_temp.set(automat.putCoin(coin))
 
+
 def resign(var_temp):
     var_temp.set(automat.resignOfTransaction())
+
 
 var_number = StringVar()
 var_temp = StringVar()
@@ -44,8 +46,7 @@ label_info = Label(window,
                    background="black",
                    relief=SUNKEN,
                    font=90,
-                   width=60,
-                   #width=39
+                   width=30,
                    height=20
                    ).grid(row=0, columnspan=3)
 
@@ -58,7 +59,7 @@ label_number = Label(window,
                      background="black",
                      relief=SUNKEN,
                      font=90,
-                     width=60,
+                     width=30,
                      height=4,
                      ).grid(row=1, columnspan=3)
 nextFreeRow += 1
@@ -66,44 +67,44 @@ nextFreeRow += 1
 # Numpad
 n = 1
 for i in range(3):
-    Button(window, text=n, width=20, command=lambda n=n: printNumber(var_number, n)) \
-        .grid(row=nextFreeRow, column=0)
-    Button(window, text=n + 1, width=20, command=lambda n=n + 1: printNumber(var_number, n)) \
-        .grid(row=nextFreeRow, column=1)
-    Button(window, text=n + 2, width=20, command=lambda n=n + 2: printNumber(var_number, n)) \
-        .grid(row=nextFreeRow, column=2)
+    Button(window, text=n, width=10, command=lambda n=n: printNumber(var_number, n)) \
+        .grid(row=nextFreeRow, column=0, columnspan=1,sticky="nsew")
+    Button(window, text=n + 1, width=10, command=lambda n=n + 1: printNumber(var_number, n)) \
+        .grid(row=nextFreeRow, column=1, columnspan=1,sticky="nsew")
+    Button(window, text=n + 2, width=10, command=lambda n=n + 2: printNumber(var_number, n)) \
+        .grid(row=nextFreeRow, column=2, columnspan=1,sticky="nsew")
     nextFreeRow += 1
     n += 3
 
-Button(window, text=0, width=20 * 3, command=lambda n=0: printNumber(var_number, n)) \
+Button(window, text=0, width=30 , command=lambda n=0: printNumber(var_number, n)) \
     .grid(row=nextFreeRow, column=0, columnspan=3)
 
 nextFreeRow += 1
 
 # Sprawdz cene, wybierz produkt
 Button(window, text="Sprawdz\ncene", width=20, command=lambda: printPrice(var_temp)) \
-    .grid(row=nextFreeRow, column=0,sticky="E")
+    .grid(row=nextFreeRow, column=0, columnspan=2,sticky="nsew")
 
-Button(window, text="Wybierz\nprodukt", width=20, command=lambda: selectProduct(var_temp)) \
-    .grid(row=nextFreeRow, column=2,sticky="W")
+Button(window, text="Wybierz\nprodukt", width=10, command=lambda: selectProduct(var_temp)) \
+    .grid(row=nextFreeRow, column=2, columnspan=1,sticky="nswe")
 
 nextFreeRow += 1
 
 # Generowanie przyciskow odpowiadajacych za monety
 listOfCoins = automat.getProperCoins()
-n=0
+n = 0
 for i in range(3):
-    Button(window, text=listOfCoins[n], width=20, command=lambda coin=listOfCoins[n]: putCoin(var_temp, coin)) \
-        .grid(row=nextFreeRow, column=0)
-    Button(window, text=listOfCoins[n + 1], width=20, command=lambda coin=listOfCoins[n+1]: putCoin(var_temp, coin)) \
-        .grid(row=nextFreeRow, column=1)
-    Button(window, text=listOfCoins[n + 2], width=20, command=lambda coin=listOfCoins[n+2]: putCoin(var_temp, coin)) \
-        .grid(row=nextFreeRow, column=2)
-    n+=3
+    Button(window, text=listOfCoins[n], width=10, command=lambda coin=listOfCoins[n]: putCoin(var_temp, coin)) \
+        .grid(row=nextFreeRow, column=0, columnspan=1,sticky="nsew")
+    Button(window, text=listOfCoins[n + 1], width=10, command=lambda coin=listOfCoins[n + 1]: putCoin(var_temp, coin)) \
+        .grid(row=nextFreeRow, column=1, columnspan=1,sticky="nsew")
+    Button(window, text=listOfCoins[n + 2], width=10, command=lambda coin=listOfCoins[n + 2]: putCoin(var_temp, coin)) \
+        .grid(row=nextFreeRow, column=2, columnspan=1,sticky="nsew")
+    n += 3
     nextFreeRow += 1
 
-Button(window, text="ZREZYGNUJ", width=20 * 3, command=lambda : resign(var_temp)) \
-    .grid(row=nextFreeRow, column=0, columnspan=3)
+Button(window, text="ZREZYGNUJ", width=30, command=lambda: resign(var_temp)) \
+    .grid(row=nextFreeRow, column=0, columnspan=3,sticky="nsew")
 
 nextFreeRow += 1
 
