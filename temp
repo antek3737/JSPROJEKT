@@ -1,0 +1,240 @@
+import copy
+import tkinter
+from time import sleep
+
+from coin import Coin
+from coin import coinsGenerator
+from coinscontainer import CoinsContainer
+from automat import Automat
+from product import Product
+from productscontainer import ProductsContainer
+from tkinter import *
+from tkinter import ttk
+
+
+
+coinsToInput = coinsGenerator(200, "PLN")
+
+file = open("listOfProductsWithPriceAndAmount", mode="r", encoding="utf-8")
+productsToInput = list()
+for l in file:
+    strTab = l.split(',')
+    productsToInput.append([Product(strTab[0], strTab[1]), int(strTab[2])])
+file.close()
+
+pc = ProductsContainer()
+pc.inputListOfProducts(productsToInput)
+print(pc)
+automat = Automat(coinsToInput, productsToInput)
+
+cc = CoinsContainer("PLN")
+
+
+def fun(nr, var):
+    automat.chooseNumber(nr)
+    var.set(automat.getChosenNumber())
+
+
+def checkProductProperties(var):
+    name = automat.getProductName()
+    price = automat.getProductPrice()
+    var.set("{0}\n{1}".format(name, price))
+
+
+def buyProduct(var, varlist):
+    var.set("{0}\n".format(automat.buyProduct()))
+    varlist.set(automat.getRemainderCoins().containerToListOFMoneyWithAmount())
+
+
+# automat.refreshAccount()
+#  var.set("Saldo:  {0}".format(automat.getSumOfClientsMoney()))
+
+
+def putCoin(coin, var):
+    var.set("{0} \n Saldo:  {1}".format(automat.putCoin(coin), automat.getSumOfClientsMoney()))
+
+
+def resign(var):
+    var.set(automat.getAvailableProductsWithIndexes())
+    # var.set("{0}".format(automat.disturbTransaction()))
+
+
+i = 1
+
+window = Tk()
+window.title("Automat")
+window.configure(background="black")
+mainframe = ttk.Frame(window)
+mainframe.grid(column=0, row=0)
+
+var = StringVar()
+label = Label(window, textvariable=var, justify=CENTER, foreground="white", background="black", relief=SUNKEN, font=90,
+              width=60, height=4).grid(row=1, columnspan=3)
+
+varlist = StringVar()
+listbox = Listbox(window, listvariable=varlist, justify=CENTER, foreground="white", background="black", relief=RAISED,
+                  font=90,
+                  width=34, height=21).grid(row=0, columnspan=3)
+
+p = 5
+for w in range(2, p):
+    for k in range(3):
+        Button(window, text=i, width=20, command=lambda i=i: fun(i, var)).grid(row=w, column=k)
+        i += 1
+Button(window, text='CENA', width=20, command=lambda: checkProductProperties(var)).grid(row=p, column=0, )
+Button(window, text='0', width=20, command=lambda: fun(0, var)).grid(row=p, column=1, )
+Button(window, text='KUP', width=20, command=lambda: buyProduct(var, varlist)).grid(row=p, column=2, )
+
+coins = [c for c in cc.getDictOfCoins().keys()]
+i = 0
+for w in range(6, 9):
+    for k in range(3):
+        Button(window, text=coins[i].getValue(), width=20, command=lambda i=i: putCoin(coins[i], var)).grid(row=w,
+                                                                                                            column=k)
+        i += 1
+
+Button(window, text='Zrezygnuj', width=50, command=lambda: resign(varlist)).grid(row=13, column=1, )
+
+window.mainloop()
+
+"""
+Button(window, text='1', width=8, command=lambda: fun(1, var)).grid(row=0, column=0, )
+Button(window, text='2', width=8, command=lambda: fun(2, var)).grid(row=0, column=1, )
+Button(window, text='3', width=8, command=lambda: fun(3, var)).grid(row=0, column=2, )
+Button(window, text='4', width=8, command=lambda: fun(4, var)).grid(row=1, column=0, )
+Button(window, text='5', width=8, command=lambda: fun(5, var)).grid(row=1, column=1, )
+Button(window, text='6', width=8, command=lambda: fun(8, var)).grid(row=1, column=2, )
+Button(window, text='7', width=8, command=lambda: fun(7, var)).grid(row=2, column=0, )
+Button(window, text='8', width=8, command=lambda: fun(8, var)).grid(row=2, column=1, )
+Button(window, text='9', width=8, command=lambda: fun(9, var)).grid(row=2, column=2, )
+Button(window, text='0', width=8, command=lambda: fun(0, var)).grid(row=3, column=1, )
+    Button(window, text='2 zł', width=18, command=lambda: putCoin(Coin("2", "PLN"), var)).grid(row=6, column=1, )
+    Button(window, text='1 zł', width=18, command=lambda: putCoin(Coin("1", "PLN"), var)).grid(row=7, column=1, )
+    Button(window, text='50 gr', width=18, command=lambda: putCoin(Coin("0.50", "PLN"), var)).grid(row=8, column=1,)
+    Button(window, text='20 gr', width=18, command=lambda: putCoin(Coin("0.20", "PLN"), var)).grid(row=9, column=1,)
+    Button(window, text='10 gr', width=18, command=lambda: putCoin(Coin("0.10", "PLN"), var)).grid(row=10, column=1,)
+    Button(window, text='5 gr', width=18, command=lambda: putCoin(Coin("0.05", "PLN"), var)).grid(row=11, column=1,)
+    Button(window, text='2 gr', width=18, command=lambda: putCoin(Coin("0.02", "PLN"), var)).grid(row=12, column=1,)
+    Button(window, text='1 gr', width=18, command=lambda: putCoin(Coin("0.01", "PLN"), var)).grid(row=12, column=1, )
+"""
+
+
+import copy
+import tkinter
+from time import sleep
+
+from coin import Coin
+from coin import coinsGenerator
+from coinscontainer import CoinsContainer
+from automat import Automat
+from product import Product
+from productscontainer import ProductsContainer
+from tkinter import *
+from tkinter import ttk
+
+
+
+coinsToInput = coinsGenerator(200, "PLN")
+
+file = open("listOfProductsWithPriceAndAmount", mode="r", encoding="utf-8")
+productsToInput = list()
+for l in file:
+    strTab = l.split(',')
+    productsToInput.append([Product(strTab[0], strTab[1]), int(strTab[2])])
+file.close()
+
+pc = ProductsContainer()
+pc.inputListOfProducts(productsToInput)
+print(pc)
+automat = Automat(coinsToInput, productsToInput)
+
+cc = CoinsContainer("PLN")
+
+
+def fun(nr, var):
+    automat.chooseNumber(nr)
+    var.set(automat.getChosenNumber())
+
+
+def checkProductProperties(var):
+    name = automat.getProductName()
+    price = automat.getProductPrice()
+    var.set("{0}\n{1}".format(name, price))
+
+
+def buyProduct(var, varlist):
+    var.set("{0}\n".format(automat.buyProduct()))
+    varlist.set(automat.getRemainderCoins().containerToListOFMoneyWithAmount())
+
+
+# automat.refreshAccount()
+#  var.set("Saldo:  {0}".format(automat.getSumOfClientsMoney()))
+
+
+def putCoin(coin, var):
+    var.set("{0} \n Saldo:  {1}".format(automat.putCoin(coin), automat.getSumOfClientsMoney()))
+
+
+def resign(var):
+    var.set(automat.getAvailableProductsWithIndexes())
+    # var.set("{0}".format(automat.disturbTransaction()))
+
+
+i = 1
+
+window = Tk()
+window.title("Automat")
+window.configure(background="black")
+mainframe = ttk.Frame(window)
+mainframe.grid(column=0, row=0)
+
+var = StringVar()
+label = Label(window, textvariable=var, justify=CENTER, foreground="white", background="black", relief=SUNKEN, font=90,
+              width=60, height=4).grid(row=1, columnspan=3)
+
+varlist = StringVar()
+listbox = Listbox(window, listvariable=varlist, justify=CENTER, foreground="white", background="black", relief=RAISED,
+                  font=90,
+                  width=34, height=21).grid(row=0, columnspan=3)
+
+p = 5
+for w in range(2, p):
+    for k in range(3):
+        Button(window, text=i, width=20, command=lambda i=i: fun(i, var)).grid(row=w, column=k)
+        i += 1
+Button(window, text='CENA', width=20, command=lambda: checkProductProperties(var)).grid(row=p, column=0, )
+Button(window, text='0', width=20, command=lambda: fun(0, var)).grid(row=p, column=1, )
+Button(window, text='KUP', width=20, command=lambda: buyProduct(var, varlist)).grid(row=p, column=2, )
+
+coins = [c for c in cc.getDictOfCoins().keys()]
+i = 0
+for w in range(6, 9):
+    for k in range(3):
+        Button(window, text=coins[i].getValue(), width=20, command=lambda i=i: putCoin(coins[i], var)).grid(row=w,
+                                                                                                            column=k)
+        i += 1
+
+Button(window, text='Zrezygnuj', width=50, command=lambda: resign(varlist)).grid(row=13, column=1, )
+
+window.mainloop()
+
+"""
+Button(window, text='1', width=8, command=lambda: fun(1, var)).grid(row=0, column=0, )
+Button(window, text='2', width=8, command=lambda: fun(2, var)).grid(row=0, column=1, )
+Button(window, text='3', width=8, command=lambda: fun(3, var)).grid(row=0, column=2, )
+Button(window, text='4', width=8, command=lambda: fun(4, var)).grid(row=1, column=0, )
+Button(window, text='5', width=8, command=lambda: fun(5, var)).grid(row=1, column=1, )
+Button(window, text='6', width=8, command=lambda: fun(8, var)).grid(row=1, column=2, )
+Button(window, text='7', width=8, command=lambda: fun(7, var)).grid(row=2, column=0, )
+Button(window, text='8', width=8, command=lambda: fun(8, var)).grid(row=2, column=1, )
+Button(window, text='9', width=8, command=lambda: fun(9, var)).grid(row=2, column=2, )
+Button(window, text='0', width=8, command=lambda: fun(0, var)).grid(row=3, column=1, )
+    Button(window, text='2 zł', width=18, command=lambda: putCoin(Coin("2", "PLN"), var)).grid(row=6, column=1, )
+    Button(window, text='1 zł', width=18, command=lambda: putCoin(Coin("1", "PLN"), var)).grid(row=7, column=1, )
+    Button(window, text='50 gr', width=18, command=lambda: putCoin(Coin("0.50", "PLN"), var)).grid(row=8, column=1,)
+    Button(window, text='20 gr', width=18, command=lambda: putCoin(Coin("0.20", "PLN"), var)).grid(row=9, column=1,)
+    Button(window, text='10 gr', width=18, command=lambda: putCoin(Coin("0.10", "PLN"), var)).grid(row=10, column=1,)
+    Button(window, text='5 gr', width=18, command=lambda: putCoin(Coin("0.05", "PLN"), var)).grid(row=11, column=1,)
+    Button(window, text='2 gr', width=18, command=lambda: putCoin(Coin("0.02", "PLN"), var)).grid(row=12, column=1,)
+    Button(window, text='1 gr', width=18, command=lambda: putCoin(Coin("0.01", "PLN"), var)).grid(row=12, column=1, )
+"""
