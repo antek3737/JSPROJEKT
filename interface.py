@@ -1,9 +1,7 @@
-import random
-import tkinter
+
 from automat import Automat
 from tkinter import *
 from tkinter import ttk
-from time import sleep
 
 automat = Automat("PLN")
 
