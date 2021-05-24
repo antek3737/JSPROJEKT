@@ -69,6 +69,7 @@ class TestAutomat(unittest.TestCase):
         self.assertFalse(remainder.is_zero())
 
     def shouldReturnMsg_whenProductIsUnavailable(self):
+        """4. Wykupienie całego asortymentu, próba zakupu po wyczerpaniu towaru oczekiwana informacja o braku."""
         # given
         automat = Automat("PLN")
         c1 = Coin("2.00", "PLN")

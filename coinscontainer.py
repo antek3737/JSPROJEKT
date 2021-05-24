@@ -1,4 +1,3 @@
-import copy
 from random import randint
 
 import MyExceptions
@@ -36,7 +35,7 @@ class CoinsContainer:
         if coin in self.getDictOfCoins().keys():
             self.getDictOfCoins()[coin] = self.getDictOfCoins()[coin] + 1
 
-        elif coin.getCurrency() != self.currency:
+        elif coin.getCurrency() != self.__currency:
             raise MyExceptions.IllegalCurrencyException("Moneta ma inna walute niż zdefiniowana w CoinsContainer")
 
         else:

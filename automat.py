@@ -82,6 +82,7 @@ class Automat:
                 return subList[0].getValue()
 
     def resignOfTransaction(self):
+        "Aborts transaction and returns remainder as a coinsContainer"
         self.__chosen = str()
         temp = copy.deepcopy(self.__clientsCoins)
         self.__clientsCoins.eraseContainer()
@@ -123,4 +124,5 @@ class Automat:
         return False
 
     def getProperCoins(self):
+        """Returns list of coins proper to use in automat"""
         return self.__coinsInAutomat.getListOfCoins()
