@@ -9,12 +9,15 @@ window = Tk()
 window.title("Automat")
 window.configure(background="black")
 mainframe = ttk.Frame(window)
-mainframe.grid(column=3, row=3)
+mainframe.grid(column=4, row=3)
 
 
 def printNumber(var_number, n):
     automat.chooseNumber(str(n))
     var_number.set(automat.getChosenNumber())
+
+def printProducts(var_temp):
+    var_temp.set(automat.returnPrettyListOfProducts())
 
 
 def printPrice(var_temp):
@@ -35,6 +38,7 @@ def resign(var_temp):
 
 var_number = StringVar()
 var_temp = StringVar()
+var_products = StringVar()
 
 nextFreeRow = 0
 label_info = Label(window,
@@ -44,9 +48,10 @@ label_info = Label(window,
                    background="black",
                    relief=SUNKEN,
                    font=90,
-                   width=30,
-                   height=20
+                   width=40,
+                   height=30
                    ).grid(row=0, columnspan=3)
+
 
 nextFreeRow += 1
 
@@ -105,7 +110,8 @@ Button(window, text="ZREZYGNUJ", width=30, command=lambda: resign(var_temp)) \
     .grid(row=nextFreeRow, column=0, columnspan=3,sticky="nsew")
 
 nextFreeRow += 1
+Button(window, text="Wyswietl", width=30, command=lambda: printProducts(var_temp)) \
+    .grid(row=nextFreeRow, column=0, columnspan=3,sticky="nsew")
 
-# window.update()
-# window.update_idletasks()
+
 window.mainloop()

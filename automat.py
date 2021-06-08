@@ -126,3 +126,6 @@ class Automat:
     def getProperCoins(self):
         """Returns list of coins proper to use in automat"""
         return self.__coinsInAutomat.getListOfCoins()
+
+    def returnPrettyListOfProducts(self):
+        return self.__productsInAutomat.getPrettyListOfProductsWithIndexed()
