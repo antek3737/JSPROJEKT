@@ -29,8 +29,8 @@ class ProductsContainer:
         return self.assignedList
 
     @staticmethod
-    def getListOfProductsWithPricesAndIndexesFromFile():
-        file = open("listOfProductsWithPriceAndAmount", mode="r", encoding="utf-8")
+    def getListOfProductsWithPricesAndIndexesFromFile(path="listOfProductsWithPriceAndAmount"):
+        file = open(path, mode="r", encoding="utf-8")
         productsToInput = list()
         for line in file:
             strTab = line.split(',')

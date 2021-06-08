@@ -29,7 +29,7 @@ class Automat:
             self.__chosen += temp[0]
         else:
             self.__chosen += number
-        print(self.__chosen)
+        #print(self.__chosen)
         return self.__chosen
 
     def selectNumber(self):

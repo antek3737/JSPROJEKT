@@ -24,7 +24,7 @@ class TestAutomat(unittest.TestCase):
         self.assertEqual(price, Decimal("3.75"))
 
     def test_shouldReturnTrue_whenThereIsNoRemainderLeft(self):
-        """2. "Wrzucenie odliczonej kwoty,zakup towaru - oczekiwany brak reszty."""
+        """2. Wrzucenie odliczonej kwoty,zakup towaru - oczekiwany brak reszty."""
         # given
         automat = Automat("PLN")
         c1 = Coin("2.00", "PLN")
@@ -68,10 +68,12 @@ class TestAutomat(unittest.TestCase):
 
         self.assertFalse(remainder.is_zero())
 
-    def shouldReturnMsg_whenProductIsUnavailable(self):
+    def test_shouldReturnMsg_whenProductIsUnavailable(self):
         """4. Wykupienie całego asortymentu, próba zakupu po wyczerpaniu towaru oczekiwana informacja o braku."""
         # given
         automat = Automat("PLN")
+        automat.chooseNumber("4")
+        automat.chooseNumber("0")
         c1 = Coin("2.00", "PLN")
         c2 = Coin("1.00", "PLN")
         c3 = Coin("0.50", "PLN")
@@ -110,8 +112,8 @@ class TestAutomat(unittest.TestCase):
         # then
         self.assertEqual(msg, "Wybrano zły numer")
 
-    def shouldReturnRemainder_whenTransactionIsAborted(self):
-        """Wrzucenie kilku monet, przerwanie transakcji - oczekiwany zwrot monet."""
+    def test_shouldReturnRemainder_whenTransactionIsAborted(self):
+        """6. Wrzucenie kilku monet, przerwanie transakcji - oczekiwany zwrot monet."""
         # given
         automat = Automat("PLN")
         c1 = Coin("2.00", "PLN")
@@ -135,7 +137,7 @@ class TestAutomat(unittest.TestCase):
 
         # then
 
-        self.assertTrue(not remainder.is_zero(), remainder.getSumOfValuesOfCoins() == Decimal("3.75"))
+        self.assertTrue(remainder.getSumOfValuesOfCoins() == Decimal("3.75"))
 
     def test_shouldLetBuyProduct_whenNumberIsReselected(self):
         """7. Wrzucenie za małej kwoty,wybranie poprawnego numeru towaru,
@@ -166,12 +168,12 @@ class TestAutomat(unittest.TestCase):
         self.assertTrue(remainder.is_zero())
 
     def test_shouldReturnTrue_whenCountingIsAppropriate(self):
-        """"8. Zakup towaru płacąc po 1gr - 
+        """8. Zakup towaru płacąc po 1gr -
         suma stu monet ma być równa 1zł.
-        Płatności można dokonać za pomocą pętlifor w interpreterze.""""
+        Płatności można dokonać za pomocą pętlifor w interpreterze."""
 
         # given
-        automat = automat("PLN")
+        automat = Automat("PLN")
         automat.chooseNumber("4")
         automat.chooseNumber("0")
         c1 = Coin("0.01", "PLN")
